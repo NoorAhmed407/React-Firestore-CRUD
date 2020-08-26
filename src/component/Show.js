@@ -38,10 +38,10 @@ class Show extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container mt-5">
         <div className="panel panel-default">
           <div className="panel-heading">
-          <h4><Link to="/">Board List</Link></h4>
+          <h4><Link className="btn btn-primary mb-3" to="/">Board List</Link></h4>
             <h3 className="panel-title">
               {this.state.board.title}
             </h3>

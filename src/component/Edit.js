@@ -66,12 +66,12 @@ class Edit extends Component {
       <div className="container">
         <div className="panel panel-default">
           <div class="panel-heading">
-            <h3 className="panel-title">
+            <h3 className="panel-title mt-5">
               EDIT BOARD
             </h3>
           </div>
           <div className="panel-body">
-            <h4><Link to={`/show/${this.state.key}`} className="btn btn-primary">Board List</Link></h4>
+            <h4><Link to={`/show/${this.state.key}`} className="btn btn-primary my-3">Board List</Link></h4>
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <label for="title">Title:</label>

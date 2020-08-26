@@ -47,12 +47,12 @@ class Create extends Component {
       <div className="container">
         <div className="panel panel-default">
           <div className="panel-heading">
-            <h3 className="panel-title">
+            <h3 className="panel-title mt-5">
               ADD BOARD
             </h3>
           </div>
           <div className="panel-body">
-            <h4><Link to="/" className="btn btn-primary">Book List</Link></h4>
+            <h4><Link to="/" className="btn btn-primary my-3">Book List</Link></h4>
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <label for="title">Title:</label>
