@@ -36,16 +36,16 @@ class App extends Component {
 
   render() {
     return (
-      <div class="container">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
+      <div className="container mt-5">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">
               BOARD LIST
             </h3>
           </div>
-          <div class="panel-body">
-            <Link className="btn btn-primary" to="/create">Add Board</Link>
-            <table class="table table-stripe">
+          <div className="panel-body">
+            <Link className="btn btn-primary my-3" to="/create">Add Board</Link>
+            <table className="table table-stripe">
               <thead>
                 <tr>
                   <th>Title</th>
