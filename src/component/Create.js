@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 
 class Create extends Component {
 
+
+  componentDidMount = () =>{
+    firebase.auth().onAuthStateChanged(user=>user ? true : this.props.history.push('/'))
+  }
+
   constructor() {
     super();
     this.ref = firebase.firestore().collection('boards');
@@ -34,7 +39,7 @@ class Create extends Component {
         description: '',
         author: ''
       });
-      this.props.history.push("/")
+      this.props.history.push("/home")
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
@@ -51,22 +56,53 @@ class Create extends Component {
               ADD BOARD
             </h3>
           </div>
+          
           <div className="panel-body">
-            <h4><Link to="/" className="btn btn-primary my-3">Book List</Link></h4>
+            <h4>
+              <Link 
+              to="/home" 
+              className="btn btn-primary my-3">Book List
+              </Link>
+            </h4>
+
             <form onSubmit={this.onSubmit}>
+
               <div className="form-group">
                 <label for="title">Title:</label>
-                <input type="text" className="form-control" name="title" value={title} onChange={this.onChange} placeholder="Title" />
+                <input type="text" 
+                className="form-control" 
+                name="title" 
+                value={title} 
+                onChange={this.onChange} 
+                placeholder="Title" />
               </div>
+
               <div className="form-group">
                 <label for="description">Description:</label>
-                <textArea className="form-control" name="description" onChange={this.onChange} placeholder="Description" cols="80" rows="3">{description}</textArea>
+                <textArea 
+                className="form-control" 
+                name="description" 
+                onChange={this.onChange} 
+                placeholder="Description" 
+                cols="80" 
+                rows="3">{description}
+                </textArea>
               </div>
+
               <div class="form-group">
                 <label for="author">Author:</label>
-                <input type="text" className="form-control" name="author" value={author} onChange={this.onChange} placeholder="Author" />
+                <input type="text" 
+                className="form-control" 
+                name="author" 
+                value={author} 
+                onChange={this.onChange} 
+                placeholder="Author" />
               </div>
-              <button type="submit" className="btn btn-success">Submit</button>
+
+              <button type="submit" 
+              className="btn btn-success">Submit
+              </button>
+
             </form>
           </div>
         </div>

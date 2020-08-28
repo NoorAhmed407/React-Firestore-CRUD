@@ -13,13 +13,19 @@ class App extends Component {
     };
   }
 
+  logOut = () =>{
+    firebase.auth().signOut();
+    this.props.history.push('/')
+
+}
+
   onCollectionUpdate = (querySnapshot) => {
     const boards = [];
     querySnapshot.forEach((doc) => {
       const { title, description, author } = doc.data();
       boards.push({
         key: doc.id,
-        doc, // DocumentSnapshot
+        doc, 
         title,
         description,
         author,
@@ -31,7 +37,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
+    firebase.auth().onAuthStateChanged(user=>{
+      user ?  this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate) : this.props.history.push('/')
+    });
+   
   }
 
   render() {
@@ -44,7 +53,14 @@ class App extends Component {
             </h3>
           </div>
           <div className="panel-body">
-            <Link className="btn btn-primary my-3" to="/create">Add Board</Link>
+            <Link 
+            className="btn btn-primary my-3" 
+            to="/create">Add Board</Link>
+            <span className="float-right">
+              <button 
+              onClick={this.logOut}
+              className="btn btn-danger my-3">LogOut</button>
+            </span>
             <table className="table table-stripe">
               <thead>
                 <tr>

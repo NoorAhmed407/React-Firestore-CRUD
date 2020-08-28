@@ -8,11 +8,13 @@ import * as serviceWorker from './serviceWorker';
 import Edit from './component/Edit';
 import Create from './component/Create';
 import Show from './component/Show';
+import Login from './authentication/Login';
 
 ReactDOM.render(
   <Router>
       <div>
-        <Route exact path='/' component={App} />
+        <Route exact path='/' component={Login} />
+        <Route path='/home' component={App} />
         <Route path='/edit/:id' component={Edit} />
         <Route path='/create' component={Create} />
         <Route path='/show/:id' component={Show} />

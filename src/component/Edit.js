@@ -15,7 +15,9 @@ class Edit extends Component {
   }
 
   componentDidMount() {
-    const ref = firebase.firestore().collection('boards').doc(this.props.match.params.id);
+    firebase.auth().onAuthStateChanged(user=>{
+      if(user){
+        const ref = firebase.firestore().collection('boards').doc(this.props.match.params.id);
     ref.get().then((doc) => {
       if (doc.exists) {
         const board = doc.data();
@@ -29,6 +31,13 @@ class Edit extends Component {
         console.log("No such document!");
       }
     });
+      }
+      else{
+        this.props.history.push('/')
+      }
+    });
+
+    
   }
 
   onChange = (e) => {
@@ -71,21 +80,43 @@ class Edit extends Component {
             </h3>
           </div>
           <div className="panel-body">
-            <h4><Link to={`/show/${this.state.key}`} className="btn btn-primary my-3">Board List</Link></h4>
+            <h4><Link to={`/show/${this.state.key}`} 
+            className="btn btn-primary my-3">Board List</Link></h4>
             <form onSubmit={this.onSubmit}>
+
               <div className="form-group">
                 <label for="title">Title:</label>
-                <input type="text" class="form-control" name="title" value={this.state.title} onChange={this.onChange} placeholder="Title" />
+                <input type="text" 
+                class="form-control" 
+                name="title" 
+                value={this.state.title} 
+                onChange={this.onChange} 
+                placeholder="Title" />
               </div>
+
               <div className="form-group">
                 <label for="description">Description:</label>
-                <input type="text" class="form-control" name="description" value={this.state.description} onChange={this.onChange} placeholder="Description" />
+                <input type="text" 
+                class="form-control" 
+                name="description" 
+                value={this.state.description} 
+                onChange={this.onChange} 
+                placeholder="Description" />
               </div>
+
               <div className="form-group">
                 <label for="author">Author:</label>
-                <input type="text" className="form-control" name="author" value={this.state.author} onChange={this.onChange} placeholder="Author" />
+                <input type="text" 
+                className="form-control" 
+                name="author" 
+                value={this.state.author} 
+                onChange={this.onChange} 
+                placeholder="Author" />
               </div>
-              <button type="submit" className="btn btn-success">Submit</button>
+
+              <button 
+              type="submit" 
+              className="btn btn-success">Submit</button>
             </form>
           </div>
         </div>

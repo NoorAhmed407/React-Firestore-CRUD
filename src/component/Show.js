@@ -13,24 +13,34 @@ class Show extends Component {
   }
 
   componentDidMount() {
-    const ref = firebase.firestore().collection('boards').doc(this.props.match.params.id);
-    ref.get().then((doc) => {
-      if (doc.exists) {
-        this.setState({
-          board: doc.data(),
-          key: doc.id,
-          isLoading: false
+
+    firebase.auth().onAuthStateChanged(user=>{
+      if(user){
+        const ref = firebase.firestore().collection('boards').doc(this.props.match.params.id);
+        ref.get().then((doc) => {
+          if (doc.exists) {
+            this.setState({
+              board: doc.data(),
+              key: doc.id,
+              isLoading: false
+            });
+          } else {
+            console.log("No such document!");
+          }
         });
-      } else {
-        console.log("No such document!");
       }
-    });
+      else{
+        this.props.history.push('/');
+      }
+    })
+
+   
   }
 
   delete(id){
     firebase.firestore().collection('boards').doc(id).delete().then(() => {
       console.log("Document successfully deleted!");
-      this.props.history.push("/")
+      this.props.history.push("/home")
     }).catch((error) => {
       console.error("Error removing document: ", error);
     });
@@ -41,11 +51,20 @@ class Show extends Component {
       <div className="container mt-5">
         <div className="panel panel-default">
           <div className="panel-heading">
-          <h4><Link className="btn btn-primary mb-3" to="/">Board List</Link></h4>
+
+          <h4>
+            <Link 
+            className="btn btn-primary mb-3"
+            to="/home">
+            Board List
+            </Link>
+          </h4>
+
             <h3 className="panel-title">
               {this.state.board.title}
             </h3>
           </div>
+
           <div className="panel-body">
             <dl>
               <dt>Description:</dt>
@@ -53,8 +72,17 @@ class Show extends Component {
               <dt>Author:</dt>
               <dd>{this.state.board.author}</dd>
             </dl>
-            <Link to={`/edit/${this.state.key}`} class="btn btn-success">Edit</Link>&nbsp;
-            <button onClick={this.delete.bind(this, this.state.key)} className="btn btn-danger">Delete</button>
+            
+            <Link 
+            to={`/edit/${this.state.key}`} 
+            class="btn btn-success">Edit</Link>&nbsp;
+
+            <button 
+            onClick={this.delete.bind(this, this.state.key)} 
+            className="btn btn-danger">
+              Delete
+            </button>
+
           </div>
         </div>
       </div>
